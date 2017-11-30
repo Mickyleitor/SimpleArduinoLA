@@ -1,38 +1,13 @@
 #define NUM_CANALES 16
-#define CLK_FREQ 50
-#define PIN_CLK 3
-#define PIN_CLK_MUESTREO 2
+#define PIN_CLK 2
 #define PIN_SHOOT 52
+#define ZOOM 10
 #define SEPARADOR 2
-#define ALARGADOR 50
-#define NUM_MUESTRAS 500 / ALARGADOR
+#define PIN_READ 7
 
 // Buffer de datos, probamos con una longitud del doble las muestras (Debido al diseño puede producir algún que otro OOM)
-uint16_t MUESTRAS [2*NUM_MUESTRAS];
-// Variables auxiliares
-int8_t i,aux,pos;
-// Variable que indica el la cantidad de muestras que se han recogido.
-int NONRDY=0;
-
-// Funcion que guarda en buffer el estado de los puertos K y F
-// Se utiliza manipulación directa de puertos por que solo necesita una instrucción de CPU
-// Y otra para sumar el NONRDY
-void get_data(){
-  MUESTRAS [NONRDY++] = (PINK << 8 ) | PINF;
-}
-
-// Imprime por pantalla todo el buffer con la ponderación adecuada para offset en analizador
-void print_data(){
-  for(aux=0;aux<NUM_MUESTRAS;aux++){
-    for(pos=0;pos<ALARGADOR;pos++){
-      for(i=0;i<NUM_CANALES;i++){
-        Serial.print((((MUESTRAS[aux] >> i) & 1 ))+(i*SEPARADOR));
-        Serial.print(",");
-      }
-    Serial.println();
-    }
-  }
-}
+uint16_t MUESTRA = 0;
+uint8_t i,aux,clk=0;
 
 void setup() {
   // Configuramos puerto lo más rápido posible
@@ -41,27 +16,38 @@ void setup() {
   for (i=0;i<NUM_CANALES;i++){
     pinMode(A0+i,INPUT);
   }
+  // Configuramos PIN que sera nuestro CLK
+  pinMode(PIN_CLK,OUTPUT);
+  // Configuramos PIN para detener/proseguir con captura de samples
   pinMode(PIN_SHOOT,INPUT);
-  // Generamos PWM en puerto deseado con frecuencia determinada
-  tone(PIN_CLK,CLK_FREQ);
-  // Enganchamos ISR en el pin que tengamos para escuchar el circuito (yo he puesto el mismo que el CLK)
-  attachInterrupt(digitalPinToInterrupt(PIN_CLK_MUESTREO), get_data, CHANGE);
+  // Configuramos PIN para DEBUG
+  pinMode(PIN_READ,INPUT);
 } 
 void loop(){
-  if(NONRDY>=NUM_MUESTRAS){
-      // Si se ha llenado el buffer, quitar ISR
-      detachInterrupt(digitalPinToInterrupt(PIN_CLK_MUESTREO));
-      // El usuario decide mostrar ultimo paquete disponible?
-      if(digitalRead(PIN_SHOOT)){
-        // Imprimir datos
-        print_data();
-        // Reiniciar datos
-        NONRDY=0;
+  // Solo entramos si tenemos orden de recoger muestras
+  if(digitalRead(PIN_SHOOT)>0.5){
+    // Cambiamos de NIVEL el CLK
+    digitalWrite(PIN_CLK,!(digitalRead(PIN_CLK)));
+    // Recogemos ZOOM samples seguidos
+    // En la practica esto será nuestro zoom en el Serial Plotter
+    for(aux=0;aux<ZOOM;aux++) {
+      // Creamos una variable msg
+      // Para enviar todo directamente de un mensaje por el serial
+      String msg;
+      // Mediante manipulacion directa de los puertos recogemos un sample
+      // de todos los canales analogicos
+      MUESTRA = (PINK << 8 ) | PINF;
+      // construimos el mensaje analizando cada pin de los puertos
+      for(i=0;i<NUM_CANALES;i++){
+        msg.concat((((MUESTRA >> i) & 1 ))+(i*SEPARADOR));
+        msg.concat(',');
       }
-      // Enganchamos ISR de nuevo y esperamos
-      attachInterrupt(digitalPinToInterrupt(PIN_CLK_MUESTREO), get_data, CHANGE);
+      // Descomentar esto para utilizar el PIN_READ para debug
+      // msg.concat(digitalRead(PIN_READ)+(16+NUM_CANALES));
+      // Enviamos el mensaje
+      Serial.println(msg);
+      // Esperamos que se envie
+      Serial.flush();
+    }
   }
 }
-
-
-
