@@ -1,5 +1,5 @@
 # SimpleArduinoLA
-A simple Arduino LA as a workaround of missing a real powerfull one.
+A simple Arduino LA as a workaround of missing a real powerful one.
 
 This is a simple Logic Analyzer, a tool which will help me debugging an electronic circuit.
 Luckily I don't need to run my circuit at high frecuencies and a custom Clock signal can be done <del>with the builtin arduino one which really surprised me (Timer running doing PWM via tone() function).</del> manually generating it via Digital Output.
