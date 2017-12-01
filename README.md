@@ -1,15 +1,15 @@
 # SimpleArduinoLA
 A simple Arduino LA as a workaround of missing a real powerfull one.
 
-This is a simple Logic Analyzer, a tool which will help me debugging an electronic circuit for a University project. 
-Luckily I don't need to run my circuit at high frecuencies and a custom Clock signal can be done with the builtin arduino one which really surprised me (Timer running doing PWM via tone() function).
+This is a simple Logic Analyzer, a tool which will help me debugging an electronic circuit.
+Luckily I don't need to run my circuit at high frecuencies and a custom Clock signal can be done <del>with the builtin arduino one which really surprised me (Timer running doing PWM via tone() function).</del> manually generating it via Digital Output.
 
 ## Requirements
 * An Arduino Mega 2560
 * The electronic circuit you want debug.
 
 ## SetUp
-* Plug all your Pins you want analyze to all Analog Pins (Mega as 16, A0-A15)
+* Plug all your Pins you want analyze to all Analog Pins (Mega has 16, A0-A15)
 * Use the PIN_CLK as a CLK signal for your circuit, we want see the logic function of our circuit rather than pushing our circuit to the time-limits!!
 * Switch ON/OFF (GND/VCC) the PIN_READ to decide print your recorded data to your fiendly arduino IDE (or whatever you have).
 
