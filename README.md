@@ -33,3 +33,5 @@ The Serial plotter will visualize our circuit like this (this is a real test one
 
 ## Thanks to Copito
 * My poor dog as he is still watching at me eating pizza while i'm programming this even if i said i won't give at him.
+
+Michele La Malva Moreno - [LinkedIn](https://www.linkedin.com/in/michele-la-malva-moreno/) | [Blogspot](https://mickysim.blogspot.com/) | [Github](https://github.com/Mickyleitor)
