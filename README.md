@@ -1,8 +1,8 @@
-# SimpleArduinoLA
+# Simple Arduino Logic Analyzer
 A simple Arduino LA as a workaround of missing a real powerful one.
 
-This is a simple Logic Analyzer, a tool which help me debugging an electronic circuit logic function.
-Luckily I don't need to run my circuit at high frecuencies and a custom Clock signal can be done <del>with the builtin arduino one which really surprised me (Timer running doing PWM via tone() function).</del> manually generating it via Digital Output.
+This is a simple Logic Analyzer, a tool which help me debugging an electronic circuit logic functions.
+Luckily we don't need to run our circuit at high frecuencies. So a custom clock signal can be generated though a pin switching the edges once we get the last sample.
 
 ## Requirements
 * An Arduino Mega 2560
@@ -32,6 +32,6 @@ The Serial plotter will visualize our circuit like this (this is a real test one
 ![](https://github.com/Mickyleitor/SimpleArduinoLA/blob/master/LogicAnalyzer.JPG)
 
 ## Thanks to Copito
-* My poor dog as he is still watching at me eating pizza while i'm programming this even if i said i won't give at him.
+* My poor dog as he is still watching at me eating pizza while i'm programming this even if i said that i won't give him a piece of pizza.
 
 Michele La Malva Moreno - [LinkedIn](https://www.linkedin.com/in/michele-la-malva-moreno/) | [Blogspot](https://mickysim.blogspot.com/) | [Github](https://github.com/Mickyleitor)
