@@ -15,7 +15,7 @@ Luckily we don't need to run our circuit at high frecuencies. So a custom clock 
 
 ## Examples
 We will test the following circuit in order to see the results via Serial Plotter.
-![](https://github.com/Mickyleitor/SimpleArduinoLA/blob/master/TestCircuit.JPG)
+![](https://github.com/Mickyleitor/SimpleArduinoLA/blob/master/Docs/TestCircuit.JPG)
 As you can see, there is 4 modes M(1:0).
 * 0 - Parallel Loading
 * 1 - Right shift loading (With SR signal used for the shift)
@@ -29,7 +29,7 @@ Naming the signals from up to down as
 * DX(3:0) - A(3:0)
 
 The Serial plotter will visualize our circuit like this (this is a real test one):
-![](https://github.com/Mickyleitor/SimpleArduinoLA/blob/master/LogicAnalyzer.JPG)
+![](https://github.com/Mickyleitor/SimpleArduinoLA/blob/master/Docs/LogicAnalyzer.JPG)
 
 ## Thanks to Copito
 * My poor dog as he is still watching at me eating pizza while i'm programming this even if i said that i won't give him a piece of pizza.
